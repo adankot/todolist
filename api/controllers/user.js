@@ -6,7 +6,7 @@ const passport = require('../../services/passport');
 
 module.exports = {
   register: wrap(function*(req, res) {
-    if (!req.query.username || !req.query.password) {
+    if (!req.body.username || !req.body.password) {
       res.send('Missing params');
     }
     const responseHandler = function (err, user, challenges) {
@@ -17,7 +17,7 @@ module.exports = {
         res.send('Missing account');
       }
       req.user = user;
-      res.redirect(`/account/${user.id}/tasks`);
+      res.redirect(`/tasks`);
     };
 
     return passport.authenticate('local-register', responseHandler)(req, res, responseHandler);

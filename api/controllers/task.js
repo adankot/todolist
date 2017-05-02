@@ -9,7 +9,7 @@ module.exports = {
   list: wrap(function*(req, res) {
     const userId = req.user._id;
     let tasks = yield Task.find({userId, deletedAt: null});
-    res.send(tasks);
+    res.render('tasks', {tasks});
   }),
   get: wrap(function*(req, res) {
     const userId = req.user._id;
@@ -24,7 +24,7 @@ module.exports = {
     }
     let task = new Task({userId, title: req.body.title, description: req.body.description});
     yield task.save();
-    res.send(task);
+    res.redirect('/tasks');
   }),
   update: wrap(function*(req, res) {
     const userId = req.user._id;
@@ -37,7 +37,8 @@ module.exports = {
   }),
   delete: wrap(function*(req, res) {
     const userId = req.user._id;
-    let task = yield Task.update({_id: taskId, userId}, {deletedAt: Date.now()}, {new: true});
-    res.send(task);
+    const taskId = req.params.taskId;
+    yield Task.remove({_id: taskId, userId});
+    res.redirect('/tasks');
   }),
 };
