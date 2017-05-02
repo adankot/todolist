@@ -1,0 +1,19 @@
+todo:
+  container_name: "todo_server"
+  env_file: .env.docker
+  build: .
+  volumes:
+    - ".:/src"
+  links:
+    - "todo_mongo"
+  ports:
+    - "8080:8080"
+
+todo_mongo:
+  container_name: "todo_mongo"
+  image: mongo:3.2.10
+  expose:
+    - "27017"
+  restart: always
+  volumes:
+    - "/data/db:/data/db"

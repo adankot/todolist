@@ -1,0 +1,11 @@
+{
+  "apps" : [
+    {
+      "name"        : "TODOLIST",
+      "script"      : "app.js",
+      "exec_mode"   : "cluster_mode",
+      "instances"   : 0
+    }
+  ]
+
+}

@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -26,7 +28,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser('keyboard cat'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-mongoose.connect('mongodb://localhost:27017/todolist');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/todolist');
 
 mongoose.connection.on('open', () => {
   require('./models/User');
