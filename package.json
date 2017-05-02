@@ -13,13 +13,19 @@
     "url": "https://github.com/adankot/todolist"
   },
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "~1.17.1",
+    "co": "^4.6.0",
+    "co-express": "^2.0.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "express": "~4.15.2",
+    "express-session": "^1.15.2",
     "hbs": "~4.0.1",
     "mongoose": "^4.9.7",
     "morgan": "~1.8.1",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "serve-favicon": "~2.4.2"
   }
 }
