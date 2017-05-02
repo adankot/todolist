@@ -7,6 +7,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const session = require('express-session');
 
 const port = process.env.PORT || '3000';
 const app = express();
@@ -22,13 +23,20 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
+app.use(cookieParser('keyboard cat'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(require('./routes.js'));
+mongoose.connect('mongodb://localhost:27017/todolist');
 
-mongoose.connect('mongodb://localhost:27017');
 mongoose.connection.on('open', () => {
+  require('./models/User');
+  require('./models/Task');
+  const passport = require('./services/passport');
+  app.use(session({ secret: 'keyboard cat' }));
+  app.use(passport.initialize());
+  app.use(passport.session());
+  passport.loadStrategies();
+  app.use(require('./routes.js'));
   console.log('Mongodb connected');
   app.listen(port, () => {
     console.log('Express app started on port ' + port);
