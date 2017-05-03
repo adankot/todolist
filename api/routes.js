@@ -16,7 +16,7 @@ const taskController = require('./controllers/task');
 router.get('/', indexController.index);
 
 router.post('/login', passport.authenticate('local-login'), userController.login);
-router.post('/register', userController.register);
+router.post('/register', passport.authenticate('local-register'), userController.login);
 
 router.get('/tasks', authMiddleware, taskController.list);
 router.get('/tasks/:taskId', authMiddleware, taskController.get);
