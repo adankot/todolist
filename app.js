@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
 
 const port = process.env.PORT || '3000';
 const app = express();
@@ -28,13 +29,27 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser('keyboard cat'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  store: new RedisStore({
+    port: process.env.REDIS_PORT || 6379,
+    host: process.env.REDIS_HOST || 'localhost',
+    db: 0,
+    ttl: null
+  }),
+  secret: process.env.SESSION_SECRET || 'secret',
+  proxy: true,
+  resave: true,
+  saveUninitialized: true,
+  name: 'todo.sid'
+}));
+
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/todolist');
 
 mongoose.connection.on('open', () => {
   require('./models/User');
   require('./models/Task');
   const passport = require('./services/passport');
-  app.use(session({ secret: 'keyboard cat' }));
+  app.use(session({secret: 'keyboard cat'}));
   app.use(passport.initialize());
   app.use(passport.session());
   passport.loadStrategies();

@@ -17,6 +17,7 @@
     "body-parser": "~1.17.1",
     "co": "^4.6.0",
     "co-express": "^2.0.0",
+    "connect-redis": "^3.3.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "dotenv": "^4.0.0",
