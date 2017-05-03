@@ -18,15 +18,18 @@
   {{#each tasks}}
     <div class="panel panel-default">
       <div class="panel-heading">
-        {{this.title}}
+        <span>{{this.title}}</span>
         <form>
-          <button class="btn-danger" formaction="/tasks/{{this._id}}/delete">Delete</button>
+          <button class="btn btn-danger" formaction="/tasks/{{this._id}}/delete">Delete</button>
         </form>
       </div>
       <div class="panel-body">
-        {{this.description}}
-        {{this.createdAt}}
+        <div>{{this.description}}</div>
+        <div>{{this.createdAt}}</div>
       </div>
     </div>
   {{/each}}
+  <form>
+    <button class="btn btn-warning" formaction="/logout">Logout</button>
+  </form>
 </div>

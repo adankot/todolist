@@ -17,6 +17,7 @@ router.get('/', indexController.index);
 
 router.post('/login', passport.authenticate('local-login'), userController.login);
 router.post('/register', passport.authenticate('local-register'), userController.login);
+router.get('/logout', authMiddleware, userController.logout);
 
 router.get('/tasks', authMiddleware, taskController.list);
 router.get('/tasks/:taskId', authMiddleware, taskController.get);
