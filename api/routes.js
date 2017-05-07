@@ -37,5 +37,6 @@ router.post('/tasks', authMiddleware, taskController.create);
 router.post('/tasks/:taskId', authMiddleware, taskController.update);
 
 router.get('/tasks/:taskId/delete', authMiddleware, taskController.delete);
+router.get('/tasks/:taskId/status/:status', authMiddleware, taskController.status);
 
 module.exports = router;

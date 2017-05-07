@@ -30,17 +30,46 @@ module.exports = {
   update: wrap(function*(req, res) {
     const userId = req.user._id;
     const taskId = req.params.taskId;
-    let task = yield Task.update({_id: taskId, userId}, {
+    yield Task.update({_id: taskId, userId}, {
       title: req.body.title,
       description: req.body.description,
       updatedAt: Date.now()
-    }, {new: true});
-    res.send(task);
+    });
+    return res.redirect('/tasks');
   }),
   delete: wrap(function*(req, res) {
     const userId = req.user._id;
     const taskId = req.params.taskId;
-    yield Task.remove({_id: taskId, userId});
-    res.redirect('/tasks');
+    let removeQuery = {
+      userId
+    };
+    if(taskId === 'allDone'){
+      removeQuery.status = 'DONE';
+    }
+    if(taskId != 'all' && taskId != 'allDone'){
+      removeQuery._id = taskId;
+    }
+    yield Task.remove(removeQuery);
+    return res.redirect('/tasks');
+  }),
+  status: wrap(function*(req, res) {
+    const userId = req.user._id;
+    const taskId = req.params.taskId;
+    const status = req.params.status;
+    yield Task.update({_id: taskId, userId}, {
+      status,
+      updatedAt: Date.now()
+    });
+    return res.redirect('/tasks');
+  }),
+  deleteAll: wrap(function*(req, res) {
+    const userId = req.user._id;
+    yield Task.remove({userId});
+    return res.redirect('/tasks');
+  }),
+  deleteAllDone: wrap(function*(req, res) {
+    const userId = req.user._id;
+    yield Task.remove({status: 'DONE', userId});
+    return res.redirect('/tasks');
   }),
 };
