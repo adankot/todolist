@@ -57,13 +57,13 @@ app.use(flash());
 
 app.engine('.hbs', hbs.engine);
 
+mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/todolist');
 
 mongoose.connection.on('open', () => {
   require('./models/User');
   require('./models/Task');
   const passport = require('./services/passport');
-  app.use(session({secret: 'keyboard cat'}));
   app.use(passport.initialize());
   app.use(passport.session());
   passport.loadStrategies();
