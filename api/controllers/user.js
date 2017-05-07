@@ -1,14 +1,13 @@
 'use strict';
 
-const wrap = require('co-express');
-
 const passport = require('../../services/passport');
 
 module.exports = {
-  login: function(req, res) {
+  login: function(req, res, user) {
     if(!!req.user){
-      res.redirect('/tasks');
+      return res.redirect('/tasks');
     }
+    return res.redirect('/');
   },
   logout: function(req, res){
     req.session.destroy(err => {

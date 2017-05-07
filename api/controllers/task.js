@@ -20,14 +20,16 @@ module.exports = {
   create: wrap(function*(req, res) {
     const userId = req.user._id;
     if (!req.body.title) {
-      res.send('Missing params');
+      req.flash('error', 'Missing params');
+      return res.redirect('/tasks');
     }
     let task = new Task({userId, title: req.body.title, description: req.body.description});
     yield task.save();
-    res.redirect('/tasks');
+    return res.redirect('/tasks');
   }),
   update: wrap(function*(req, res) {
     const userId = req.user._id;
+    const taskId = req.params.taskId;
     let task = yield Task.update({_id: taskId, userId}, {
       title: req.body.title,
       description: req.body.description,

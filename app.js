@@ -11,6 +11,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
+const exphbs = require('express-handlebars');
+const flash = require('connect-flash');
 
 const port = process.env.PORT || '3000';
 const app = express();
@@ -18,6 +20,14 @@ const app = express();
 app.set('port', port);
 
 // view engine setup
+const hbs = exphbs.create({
+  extname: '.hbs',
+  defaultLayout: 'default',
+  layoutsDir: './views/layouts/',
+  partialsDir: './views/partials/'
+});
+
+app.engine('.hbs', hbs.engine);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
@@ -42,6 +52,10 @@ app.use(session({
   saveUninitialized: true,
   name: 'todo.sid'
 }));
+
+app.use(flash());
+
+app.engine('.hbs', hbs.engine);
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/todolist');
 

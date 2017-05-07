@@ -1,36 +1,127 @@
-<div class="container">
-  <div class="panel panel-default">
-    <div class="panel-heading">New</div>
-    <div class="panel-body">
-      <div class="col-xs-12">
-        <form class="form-horizontal" action="/tasks" method="POST">
-          <div class="form-group">
-            <label for="email">Title:</label>
-            <input type="text" class="form-control" id="title" name="title">
-          </div>
-          <div class="form-group">
-            <label for="description">Description:</label>
-            <input type="text" class="form-control" id="description" name="description">
-          </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-      </div>
-    </div>
-  </div>
-  {{#each tasks}}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <span>{{this.title}}</span>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="pull-left">
+            Welcome {{user.name}}
+        </h4>
         <form>
-          <button class="btn btn-danger" formaction="/tasks/{{this._id}}/delete">Delete</button>
+            <div class="pull-right">
+                <button type="button" class="btn btn-success btn-s " data-toggle="modal"
+                        data-target="#newModal">
+                    New Task
+                </button>
+                <button class="btn btn-warning btn-s" formaction="/logout">
+                    Logout
+                </button>
+            </div>
         </form>
-      </div>
-      <div class="panel-body">
-        <div>{{this.description}}</div>
-      </div>
+        <div class="clearfix"></div>
     </div>
-  {{/each}}
-  <form>
-    <button class="btn btn-warning" formaction="/logout">Logout</button>
-  </form>
+    <div class="panel-body">
+        {{#each tasks}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="pull-left">{{this.title}}</span>
+                    <form>
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-success btn-xs"
+                                    formaction="/tasks/{{this._id}}/delete">
+                                Status
+                            </button>
+                            <button type="button" class="btn btn-warning btn-xs" data-toggle="modal"
+                                    data-target="#updateModal"
+                                    onclick="updateModal(this)" data-id="{{this._id}}" data-title="{{this.title}}"
+                                    data-description="{{this.description}}">
+                                Update
+                            </button>
+                            <button type="submit" class="btn btn-danger btn-xs"
+                                    formaction="/tasks/{{this._id}}/delete">
+                                Delete
+                            </button>
+                        </div>
+                    </form>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    <div>{{this.description}}</div>
+                </div>
+            </div>
+        {{/each}}
+
+        <div id="updateModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update task</h4>
+                    </div>
+                    <form>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="title">Title:</label>
+                                <input type="text" class="form-control" id="update-title" name="title">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description:</label>
+                                <input type="text" class="form-control" id="update-description" name="description">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="update-button" class="btn btn-warning" onclick="update()">
+                                Update
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="newModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update task</h4>
+                    </div>
+                    <form action="/tasks" method="POST">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="title">Title:</label>
+                                <input type="text" class="form-control" id="update-title" name="title">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description:</label>
+                                <input type="text" class="form-control" id="update-description" name="description">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Create</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script>
+    let updateLink;
+    function updateModal(button) {
+        console.log($(button).data('id'));
+        $('#updateModal .modal-body #update-title').val($(button).data('title'));
+        $('#updateModal .modal-body #update-description').val($(button).data('description'));
+        updateLink = '/tasks/' + $(button).data('id');
+    }
+    function update() {
+        $.ajax({
+            method: 'post',
+            url: updateLink,
+            data: {
+                title: $('#update-title').val(),
+                description: $('#update-description').val()
+            }
+        }).done(function (res) {
+            location.reload();
+        })
+    }
+</script>

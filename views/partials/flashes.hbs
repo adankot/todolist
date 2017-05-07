@@ -1,0 +1,12 @@
+{{#each errorMsg}}
+    {{>flash message=this bootstrapClass='danger'}}
+{{/each}}
+{{#each infoMsg}}
+    {{>flash message=this bootstrapClass='info'}}
+{{/each}}
+{{#each successMsg}}
+    {{>flash message=this bootstrapClass='success'}}
+{{/each}}
+{{#each warningMsg}}
+    {{>flash message=this bootstrapClass='warning'}}
+{{/each}}

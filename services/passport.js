@@ -12,12 +12,12 @@ const loginHandler = function (req, username, password, done) {
       name: username
     });
     if(!user){
-      return done('Wrong username')
+      return done(null, false, 'Wrong username')
     }
     if (yield user.checkPassword(password)) {
       return done(null, user);
     }
-    return done('Wrong password');
+    return done(null, false, 'Wrong password');
   });
 };
 
@@ -31,7 +31,7 @@ const registerHandler = function (req, username, password, done) {
     try {
       yield user.save();
     } catch (error){
-      return done('Username already taken');
+      return done(null, false, 'Username already taken');
     }
     return done(null, user);
   })

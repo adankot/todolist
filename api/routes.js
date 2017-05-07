@@ -7,16 +7,27 @@ const passport = require('../services/passport');
 
 // Middlewares
 const authMiddleware = require('./middlewares/auth');
+const flashMiddleware = require('./middlewares/reqFlash');
 
 // Controllers
 const indexController = require('./controllers/index');
 const userController = require('./controllers/user');
 const taskController = require('./controllers/task');
 
+router.use(flashMiddleware);
+
 router.get('/', indexController.index);
 
-router.post('/login', passport.authenticate('local-login'), userController.login);
-router.post('/register', passport.authenticate('local-register'), userController.login);
+router.post('/login', passport.authenticate('local-login', {
+  successRedirect: '/tasks',
+  failureRedirect: '/',
+  failureFlash: true}
+  ));
+router.post('/register', passport.authenticate('local-register', {
+  successRedirect: '/tasks',
+  failureRedirect: '/',
+  failureFlash: true}
+  ));
 router.get('/logout', authMiddleware, userController.logout);
 
 router.get('/tasks', authMiddleware, taskController.list);
