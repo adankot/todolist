@@ -8,7 +8,7 @@ todo:
     - "todo_mongo"
     - "todo_redis"
   ports:
-    - "4001:3000"
+    - "3000:3000"
 
 todo_mongo:
   container_name: "todo_mongo"

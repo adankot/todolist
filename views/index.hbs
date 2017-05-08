@@ -1,24 +1,28 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h4>
-      Login or register
-    </h4>
-  </div>
-  <div class="panel-body">
-    <div class="col-xs-12">
-      <form class="form-horizontal" action="/login" method="POST">
-        <div class="form-group">
-          <label for="username">Username:</label>
-          <input type="text" class="form-control" id="username" name="username">
-        </div>
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" class="form-control" id="password" name="password">
-        </div>
-        <button type="submit" class="btn btn-default">Login</button>
-        <button type="submit" class="btn btn-default" formaction="/register" formmethod="post">Registration
-        </button>
-      </form>
+<div class="col-md-4 col-md-offset-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4>
+        Login or register
+      </h4>
+    </div>
+    <div class="panel-body">
+      <div class="col-xs-12">
+        <form class="form-horizontal" action="/login" method="POST">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" class="form-control" id="username" name="username">
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" name="password">
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-success">Login</button>
+            <button type="submit" class="btn btn-warning" formaction="/register" formmethod="post">Registration
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>

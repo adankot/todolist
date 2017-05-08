@@ -14,6 +14,8 @@ const RedisStore = require('connect-redis')(session);
 const exphbs = require('express-handlebars');
 const flash = require('connect-flash');
 
+const connections = require('./config/connections');
+
 const port = process.env.PORT || '3000';
 const app = express();
 
@@ -36,16 +38,11 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser('keyboard cat'));
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-  store: new RedisStore({
-    port: process.env.REDIS_PORT || 6379,
-    host: process.env.REDIS_HOST || 'localhost',
-    db: 0,
-    ttl: null
-  }),
+  store: new RedisStore(connections.redis),
   secret: process.env.SESSION_SECRET || 'secret',
   proxy: true,
   resave: true,
@@ -58,7 +55,7 @@ app.use(flash());
 app.engine('.hbs', hbs.engine);
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/todolist');
+mongoose.connect(connections.mongodbUri);
 
 mongoose.connection.on('open', () => {
   require('./models/User');
