@@ -23,7 +23,7 @@ a {
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 0 10% 0 10%;
+  padding: 0 25px 0 25px;
   /* Set the fixed height of the footer here */
   height: 50px;
   line-height: 50px; /* Vertically center the text there */
