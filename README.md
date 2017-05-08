@@ -1,5 +1,15 @@
 # To do list
-It is a test project. A basic api for a todo list.
+It is a test project. A basic todo list, where you can register and create tasks for yourself.
+Opportunities:
+- Register yourself with username and password
+- Login with username and password
+- List your tasks
+- Create task
+- Update task
+- Update the status of a task
+- Delete a task
+- Delete all tasks
+- Delete all completed tasks
 
 For an easy deploy, currently it use Docker, but it is not required. You just need to install Node.js v6.10.0 (LTS), Redis 3.2.8 and MongoDB 3.4.2 manually on your server.
 
@@ -9,8 +19,8 @@ For an easy deploy, currently it use Docker, but it is not required. You just ne
 ```
 sudo apt-get install git
 git clone << repository url >>
-npm i
 ```
+*If you are not using docker, then you should run: `npm i`*
 
 ### Install or upgrade Docker and Docker-compose
 To install or upgrade Docker and Docker-compose build applications use the command line and type:
@@ -30,14 +40,14 @@ sudo docker-compose --version #requires at least version 1.7.1
 
 ### Start the server
 
-If you are not using docker, you should set environment variables in `.env` file (if needed, define new one):
+If you are using docker, then there is a predefined .env.docker file, which is set to the docker compose file, and you don't have to define a new one.
+
+***ELSE**:If you are not using docker, you should set environment variables in `.env` file (if needed, define new one):*
 
 ```bash
 cp .env.example .env
 nano .env
 ```
-
-*If you are using docker, then there is a predefined .env.docker file, which is set to the docker compose file, and you don't have to define a new one.*
 
 Before start, build the application:
 
@@ -50,3 +60,21 @@ Start the application
 ```bash
 sudo docker-compose up
 ```
+
+## Usage
+
+By default the server is listening on `http://localhost:3000`.
+- `/` the index and login screen
+- `/tasks` is where you can find your tasks (Only for authenticated users)
+
+## Future of the project
+
+### Planed features
+- Tests for easier development and deployment
+- Advanced authentication
+  - Better registration flow
+  - Email verification
+  - Login through facebook, google and twitter
+- Optimalization
+  - Redis cache for user's task list
+  - Pagination for user's task list
