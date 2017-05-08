@@ -1,6 +1,6 @@
 # To do list
-It is a test project. A basic todo list, where you can register and create tasks for yourself.
-Opportunities:
+This is a test project. A basic to do list, where you can register an account and create tasks for yourself.
+User actions:
 - Register yourself with username and password
 - Login with username and password
 - List your tasks
@@ -11,7 +11,7 @@ Opportunities:
 - Delete all tasks
 - Delete all completed tasks
 
-For an easy deploy, currently it use Docker, but it is not required. You just need to install Node.js v6.10.0 (LTS), Redis 3.2.8 and MongoDB 3.4.2 manually on your server.
+For an easy deploy, currently it uses Docker, but it is not required. You just need to install Node.js v6.10.0 (LTS), Redis 3.2.8 and MongoDB 3.4.2 manually on your server.
 
 ## Installation
 
@@ -69,12 +69,12 @@ By default the server is listening on `http://localhost:3000`.
 
 ## Future of the project
 
-### Planed features
+### Planned features
 - Tests for easier development and deployment
 - Advanced authentication
   - Better registration flow
   - Email verification
-  - Login through facebook, google and twitter
+  - Login through Facebook, Google and Twitter
 - Optimalization
   - Redis cache for user's task list
   - Pagination for user's task list
