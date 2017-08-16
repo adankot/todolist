@@ -1,3 +1,5 @@
+[![Known Vulnerabilities](https://snyk.io/test/github/adankot/todolist/badge.svg)](https://snyk.io/test/github/adankot/todolist)
+
 # To do list
 This is a test project. A basic to do list, where you can register an account and create tasks for yourself.
 User actions:
