@@ -1,4 +1,4 @@
-FROM node:6.10.2
+FROM node:6.17.1
 
 RUN mkdir /src
 RUN apt-get update
